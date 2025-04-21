@@ -1,11 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 import '../../../global_widget/app_text.dart';
 
-
 class EmployeeCard extends StatelessWidget {
-  const EmployeeCard({super.key});
+  const EmployeeCard({super.key, this.empData});
+  final dynamic empData;
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +15,19 @@ class EmployeeCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildColumn(title: 'Name', value: 'Md Rafiul Razu'),
-              _buildColumn(title: 'Phone', value: '01788888888'),
-              _buildColumn(title: 'Email', value: 'razu@gmail.com'),
-              _buildColumn(title: 'Designation', value: 'Software Engineer'),
+              _buildColumn(title: 'Name', value: empData['name']),
+              _buildColumn(title: 'Phone', value: empData['phone']),
+              _buildColumn(title: 'Email', value: empData['email']),
+              _buildColumn(title: 'Designation', value: empData['designation']),
+              _buildColumn(title: 'Join Date', value: empData['join_date']),
+              _buildColumn(title: 'Expertise In', value: empData['expertise_in']),
+              _buildColumn(title: 'Address', value: empData['address']),
             ],
           ),
         ),
       ),
     );
   }
-
 
   Column _buildColumn({required String title, required String value}) {
     return Column(

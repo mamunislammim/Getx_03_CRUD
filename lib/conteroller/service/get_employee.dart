@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:getx_02_crud_operation/utils/common_fun/local_storage.dart';
 import 'package:http/http.dart' as http;
@@ -15,10 +16,12 @@ class EmployeeService {
       var response = await http.get(url, headers: header);
 
       log("=============== ${response.statusCode}============");
-      log("=============== ${response.body}============");
-      if (response.statusCode == 200) {
-        log("================Gettttttttttttttttttt============");
-      }
+       if (response.statusCode == 200) {
+         var data = jsonDecode(response.body);
+         var a = data['data'];
+         log("==============A : ${a.length}");
+         return a;
+       }
     } catch (e) {
       log("Error : $e");
     }
