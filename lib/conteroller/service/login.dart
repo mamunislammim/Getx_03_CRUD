@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
+import 'package:getx_02_crud_operation/conteroller/service/api_urls.dart';
 import 'package:getx_02_crud_operation/utils/common_fun/local_storage.dart';
 import 'package:http/http.dart' as http;
 
 class LoginRepository {
   static Future<bool> service({required String mail, required String password}) async {
     try {
-      Uri uri = Uri.parse("https://flutter-batch3.advocate-portfolio.classicitltd.com/api/login");
+      Uri uri = Uri.parse(ApiUrls.loginUrl);
       var response = await http.post(uri, body: {"email_phone": mail, "password": password});
 
       log("==========${mail}== ${password}================");

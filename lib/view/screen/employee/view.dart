@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:getx_02_crud_operation/view/global_widget/app_text.dart';
 import 'package:getx_02_crud_operation/view/screen/employee/widget/employee_card.dart';
@@ -41,7 +43,16 @@ class EmployeeView extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: controller.employeeList.length,
                   itemBuilder:
-                      (context, index) => EmployeeCard(empData: controller.employeeList[index]),
+                      (context, index) => EmployeeCard(
+                        empData: controller.employeeList[index],
+                        deleteFun: () {
+                          log("========================");
+                          controller.deleteEmployee(id: controller.employeeList[index]['id']);
+                        },
+                        editFun: () {
+                          log("===========Edit Fun ============");
+                        },
+                      ),
                 ),
               ),
             ),

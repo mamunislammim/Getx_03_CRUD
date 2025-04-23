@@ -1,17 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
+import 'package:getx_02_crud_operation/conteroller/service/api_urls.dart';
 import 'package:http/http.dart' as http;
-
 import '../../utils/common_fun/local_storage.dart';
 
 class EmployeeAddService {
   static Future<bool> service({required Map<String, dynamic> data}) async {
     try {
       var token = await LocalStorage().getData(key: "token");
-      Uri uri = Uri.parse(
-        "https://flutter-batch3.advocate-portfolio.classicitltd.com/api/employee/store",
-      );
+      Uri uri = Uri.parse(ApiUrls.addEmployeeUrl);
       var header = {
         "Accept": "application/json",
         "Content-Type": "application/json",

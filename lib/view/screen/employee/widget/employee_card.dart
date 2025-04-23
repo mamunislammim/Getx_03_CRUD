@@ -1,29 +1,46 @@
+
 import 'package:flutter/material.dart';
 import '../../../global_widget/app_text.dart';
 
 class EmployeeCard extends StatelessWidget {
-  const EmployeeCard({super.key, this.empData});
+  const EmployeeCard({super.key, this.empData, required this.deleteFun, required this.editFun});
   final dynamic empData;
+  // final EmployeeController controller;
+  final VoidCallback deleteFun;
+  final VoidCallback editFun;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          width: MediaQuery.sizeOf(context).width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildColumn(title: 'Name', value: empData['name']),
-              _buildColumn(title: 'Phone', value: empData['phone']),
-              _buildColumn(title: 'Email', value: empData['email']),
-              _buildColumn(title: 'Designation', value: empData['designation']),
-              _buildColumn(title: 'Join Date', value: empData['join_date']),
-              _buildColumn(title: 'Expertise In', value: empData['expertise_in']),
-              _buildColumn(title: 'Address', value: empData['address']),
-            ],
-          ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.topRight,
+          children: [
+            SizedBox(
+              width: MediaQuery.sizeOf(context).width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildColumn(title: 'Name', value: empData['name']),
+                  _buildColumn(title: 'Phone', value: empData['phone']),
+                  _buildColumn(title: 'Email', value: empData['email']),
+                  _buildColumn(title: 'Designation', value: empData['designation']),
+                  _buildColumn(title: 'Join Date', value: empData['join_date']),
+                  _buildColumn(title: 'Expertise In', value: empData['expertise_in']),
+                  _buildColumn(title: 'Address', value: empData['address']),
+                ],
+              ),
+            ),
+            Column(
+              children: [
+                IconButton(onPressed: deleteFun, icon: Icon(Icons.delete, color: Colors.red)),
+                IconButton(onPressed: editFun, icon: Icon(Icons.edit_note, color: Colors.red)),
+                IconButton(onPressed: editFun, icon: Icon(Icons.edit_note, color: Colors.red)),
+              ],
+            ),
+          ],
         ),
       ),
     );
