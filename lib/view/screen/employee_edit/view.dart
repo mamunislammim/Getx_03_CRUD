@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:getx_02_crud_operation/conteroller/get/employee_add.dart';
 import 'package:getx_02_crud_operation/view/global_widget/button.dart';
 import 'package:getx_02_crud_operation/view/global_widget/text_field.dart';
 import 'package:get/get.dart';
+import '../../../conteroller/get/employee_edit.dart';
 
-class EmployeeAddScreen extends StatelessWidget {
-  const EmployeeAddScreen({super.key});
+class EmployeeEditScreen extends StatelessWidget {
+  const EmployeeEditScreen({super.key});
+  // final dynamic empData;
 
   @override
   Widget build(BuildContext context) {
-    EmployeeAddController controller = Get.put(EmployeeAddController());
+    EmployeeEditController controller = Get.put(EmployeeEditController());
+    // controller.dataInitial(data: empData);
     return Scaffold(
-      appBar: AppBar(
-        title: Obx(
-          () => controller.isEditPage.isTrue ? Text("Employee Edit") : Text("Employee Add"),
-        ),
-      ),
+      appBar: AppBar(title: Text("Employee Edit")),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
@@ -29,9 +27,9 @@ class EmployeeAddScreen extends StatelessWidget {
               CustomTextField(textController: controller.expertiseController),
               CustomTextField(textController: controller.addressController),
               CustomButton(
-                title: controller.isEditPage.isTrue ? "Edit" : "Add",
+                title: "Edit",
                 onTap: () {
-                  controller.addEmployeeFun();
+                  controller.editEmployeeFun();
                 },
               ),
             ],

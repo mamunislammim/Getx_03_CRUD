@@ -1,11 +1,12 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:getx_02_crud_operation/view/global_widget/app_text.dart';
 import 'package:getx_02_crud_operation/view/screen/employee/widget/employee_card.dart';
 import 'package:get/get.dart';
 import 'package:getx_02_crud_operation/view/screen/employee_add/view.dart';
 import '../../../conteroller/get/employee.dart';
+import '../../../utils/common_fun/local_storage.dart';
+import '../employee_edit/view.dart';
 
 class EmployeeView extends StatelessWidget {
   const EmployeeView({super.key});
@@ -24,6 +25,19 @@ class EmployeeView extends StatelessWidget {
               controller.fetchEmployeeData();
             },
             icon: Icon(Icons.refresh),
+          ),
+          Obx(
+            () => Switch(
+              value: controller.isLightTheme.value,
+              onChanged: (v) {
+                controller.isLightTheme.value = !controller.isLightTheme.value;
+
+                controller.isLightTheme.isTrue
+                    ? Get.changeTheme(ThemeData.light())
+                    : Get.changeTheme(ThemeData.dark());
+                LocalStorage().addData(key: "app_theme", value: controller.isLightTheme.toString());
+              },
+            ),
           ),
         ],
       ),
@@ -50,7 +64,16 @@ class EmployeeView extends StatelessWidget {
                           controller.deleteEmployee(id: controller.employeeList[index]['id']);
                         },
                         editFun: () {
-                          log("===========Edit Fun ============");
+                          Get.to(
+                            EmployeeAddScreen(),
+                            arguments: controller.employeeList[index],
+                          )!.then((v) => controller.fetchEmployeeData());
+
+                          // Get.to(EmployeeEditScreen(empData: controller.employeeList[index]))!.then((v)=> controller.fetchEmployeeData());
+                          // Get.to(
+                          //   EmployeeEditScreen(),
+                          //   arguments: controller.employeeList[index],
+                          // )!.then((v) => controller.fetchEmployeeData());
                         },
                       ),
                 ),

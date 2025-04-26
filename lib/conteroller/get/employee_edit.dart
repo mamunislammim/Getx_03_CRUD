@@ -7,30 +7,27 @@ import 'package:getx_02_crud_operation/conteroller/service/employee_add.dart';
 
 import '../service/employee_edit.dart';
 
-class EmployeeAddController extends GetxController {
+class EmployeeEditController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController designationController = TextEditingController();
   TextEditingController expertiseController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  RxBool isEditPage = false.obs;
   int id = 0;
 
   dataInitial({required dynamic data}) {
     log("===============${data}=======================");
-    nameController.text = data['name'] ?? "";
-    phoneController.text = data['phone'] ?? "";
-    emailController.text = data['email'] ?? "";
-    designationController.text = data['designation'] ?? "";
-    expertiseController.text = data['expertise_in'] ?? "";
-    addressController.text = data['address'] ?? "";
-    id = data['id'] ?? "";
+    nameController.text = data['name'];
+    phoneController.text = data['phone'];
+    emailController.text = data['email'];
+    designationController.text = data['designation'];
+    expertiseController.text = data['expertise_in'];
+    addressController.text = data['address'];
+    id = data['id'];
   }
 
-  addEmployeeFun() async {
-    // use Validator here.....
-
+  editEmployeeFun() async {
     Map<String, dynamic> jsonData = {
       "name": nameController.text,
       "phone": phoneController.text,
@@ -41,14 +38,7 @@ class EmployeeAddController extends GetxController {
       "roles": "Test",
       "expertise_in": expertiseController.text,
     };
-
-    var status = false;
-
-    if (isEditPage.isTrue) {
-      status = await EmployeeEditService.service(data: jsonData, id: id);
-    } else {
-      status = await EmployeeAddService.service(data: jsonData);
-    }
+    var status = await EmployeeEditService.service(data: jsonData, id: id);
 
     if (status == true) {
       Get.back();
@@ -58,11 +48,8 @@ class EmployeeAddController extends GetxController {
   @override
   void onInit() {
     var a = Get.arguments;
-    log("=============A : $a===========================");
-    if (a != null) {
-      isEditPage.value = true;
-      dataInitial(data: a);
-    }
+    dataInitial(data: a);
+    log("====================${a}=======");
     super.onInit();
   }
 }

@@ -6,11 +6,12 @@ import 'package:getx_02_crud_operation/conteroller/service/get_employee.dart';
 
 class EmployeeController extends GetxController {
   RxList employeeList = [].obs;
+  RxBool isLightTheme = true.obs;
 
   fetchEmployeeData() async {
     log("=========AAAAAAAAAAAAAAAAAAAAAAAAAAA=======");
     var data = await EmployeeService.getService();
-    employeeList.value = data;
+    employeeList.value = data ?? [];
     log("======employeeList Length : ${employeeList.length}==========");
   }
 
