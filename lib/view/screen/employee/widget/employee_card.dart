@@ -1,5 +1,7 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:getx_02_crud_operation/conteroller/service/api_urls.dart';
 import '../../../global_widget/app_text.dart';
 
 class EmployeeCard extends StatelessWidget {
@@ -11,6 +13,7 @@ class EmployeeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("${ApiUrls.baseIP + empData['image']}");
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -23,6 +26,17 @@ class EmployeeCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  empData['image'] == ""
+                      ? Image.network(
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNNLEL-qmmLeFR1nxJuepFOgPYfnwHR56vcw&s",
+                        height: 100,
+                        width: 100,
+                      )
+                      : Image.network(
+                        ApiUrls.baseIP + "/" + empData['image'],
+                        height: 100,
+                        width: 100,
+                      ),
                   _buildColumn(title: 'Name', value: empData['name']),
                   _buildColumn(title: 'Phone', value: empData['phone']),
                   _buildColumn(title: 'Email', value: empData['email']),

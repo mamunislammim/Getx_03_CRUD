@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:getx_02_crud_operation/conteroller/service/employee_add.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../service/employee_edit.dart';
 
@@ -16,6 +17,23 @@ class EmployeeAddController extends GetxController {
   TextEditingController addressController = TextEditingController();
   RxBool isEditPage = false.obs;
   int id = 0;
+
+  RxString imagePath = "".obs;
+  XFile? image;
+
+  pickImageFun({required String type}) async {
+    final ImagePicker picker = ImagePicker();
+
+    if (type == "C") {
+      image = await picker.pickImage(source: ImageSource.camera);
+    } else {
+      image = await picker.pickImage(source: ImageSource.gallery);
+    }
+    if (image != null) {
+      imagePath.value = image!.path;
+    }
+    Get.back();
+  }
 
   dataInitial({required dynamic data}) {
     log("===============${data}=======================");
@@ -40,6 +58,7 @@ class EmployeeAddController extends GetxController {
       "address": addressController.text,
       "roles": "Test",
       "expertise_in": expertiseController.text,
+      "image": image,
     };
 
     var status = false;
@@ -47,7 +66,8 @@ class EmployeeAddController extends GetxController {
     if (isEditPage.isTrue) {
       status = await EmployeeEditService.service(data: jsonData, id: id);
     } else {
-      status = await EmployeeAddService.service(data: jsonData);
+      // status = await EmployeeAddService.service(data: jsonData);
+      status = await EmployeeAddService.serviceWithImage(data: jsonData);
     }
 
     if (status == true) {
